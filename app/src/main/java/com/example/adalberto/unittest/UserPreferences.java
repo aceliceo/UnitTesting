@@ -13,6 +13,10 @@ public class UserPreferences {
     public static final String BIRTH_DATE = "birth_date";
     public static final String GENDER = "gender";
 
+    public UserPreferences(){
+
+    }
+
     public static SharedPreferences getSettings(Context context) {
         return context.getSharedPreferences(USER_PREFERENCES, Context.MODE_PRIVATE);
     }
@@ -25,13 +29,14 @@ public class UserPreferences {
         return preferences.edit();
     }
 
-    public static void setUserName(SharedPreferences.Editor editor, String name) {
-        editor.putString(USER_NAME, name).commit();
+    public static void setUserName(Context context, String name) {
+        SharedPreferences.Editor perfs = getSettings(context).edit();
+        perfs.putString(USER_NAME, name).commit();
     }
 
-    public static void setUserName(Context context, String name) {
-        getSettingsEditor(context).putString(USER_NAME, name).commit();
-    }
+//    public static void setUserName(Context context, String name) {
+//        getSettingsEditor(context).putString(USER_NAME, name).commit();
+//    }
 
     public static String getUserName(Context context) {
         return getSettings(context).getString(USER_NAME, "");
