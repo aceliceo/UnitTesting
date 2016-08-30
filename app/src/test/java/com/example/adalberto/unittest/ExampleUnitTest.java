@@ -8,6 +8,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 
+import static org.mockito.Mockito.atLeastOnce;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.MockitoAnnotations.initMocks;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -37,8 +39,7 @@ public class ExampleUnitTest {
 
         initMocks(this);
         when(mUserPreferences.getSettings(mContext)).thenReturn(mSharedPreferences);
-        when(mUserPreferences.getSettings(mContext).edit()).thenReturn(mEditor);
-        //when(mSharedPreferences.edit()).thenReturn(mEditor);
+        when(mSharedPreferences.edit()).thenReturn(mEditor);
     }
 
     @Test
@@ -54,5 +55,8 @@ public class ExampleUnitTest {
 
         //Assert
         assertEquals(mUserPreferences.getUserName(mContext), name);
+
+        verify(mEditor, atLeastOnce()).commit();
+        verify(mSharedPreferences, atLeastOnce()).edit();
     }
 }
